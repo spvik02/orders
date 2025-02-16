@@ -1,7 +1,10 @@
 spring:
   application:
     name: number-generate-service
-
+  data:
+    redis:
+      host: redis
+      port: 6379
+      connect-timeout: 6000ms
 server:
   port: 8081
-  
