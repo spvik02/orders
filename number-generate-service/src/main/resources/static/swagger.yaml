@@ -1,0 +1,56 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "OpenAPI definition",
+    "version": "v0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8081",
+      "description": "Generated server url"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Number Generation",
+      "description": "API для генерации уникальных номеров заказов"
+    }
+  ],
+  "paths": {
+    "/numbers": {
+      "get": {
+        "tags": [
+          "Number Generation"
+        ],
+        "summary": "Сгенерировать уникальный номер заказа",
+        "description": "Возвращает сгенерированный номер заказа (5 символов) и текущую дату (формат YYYYMMDD), пример 1111120241212",
+        "operationId": "getNumber",
+        "responses": {
+          "500": {
+            "description": "Ошибка на сервере",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Успешно сгенерирован номер заказа",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+
+  }
+}
