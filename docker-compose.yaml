@@ -1,0 +1,53 @@
+version: '3.1'
+    
+#volumes:
+#  postgres-orders-data:
+
+services:
+  orders_db:
+    image: postgres:15
+    container_name: orders_db
+    restart: always
+    ports:
+      - "127.0.0.1:5433:5432"
+    environment:
+      - POSTGRES_DB=orders_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=SUP3RpostU$3R
+    #volumes:
+    #  - postgres-orders-data:/var/lib/postgresql/data
+      
+  redis:
+    image: redis:7.0
+    container_name: redis
+    ports:
+      - "6379:6379"
+      
+  number-generate-service:
+    restart: always
+    build:
+      context: ./number-generate-service
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"      
+    depends_on: 
+      - redis
+    environment:
+      - SPRING_DATA_REDIS_HOST=redis
+      - SPRING_DATA_REDIS_PORT=6379
+
+  orders-service:
+    build:
+      context: ./orders-service
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on: 
+      - orders_db
+      - number-generate-service
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://orders_db:5432/orders_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: SUP3RpostU$3R
+      SPRING_DATASOURCE_HIKARI_JDBCURL: jdbc:postgresql://orders_db:5432/orders_db
+      NUMBER_GENERATE_SERVICE_BASE_URL: http://number-generate-service:8081
