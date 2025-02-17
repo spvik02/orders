@@ -1,6 +1,22 @@
 spring:
   application:
     name: orders-service
-
+  datasource:
+    url: jdbc:postgresql://localhost:5433/orders_db
+    username: postgres
+    password: SUP3RpostU$3R
+    driverClassName: org.postgresql.Driver
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      connection-timeout: 20000 #20s
+      minimum-idle: 2
+      maximum-pool-size: 5
+      max-lifetime: 900000 #15m
+      jdbcUrl: jdbc:postgresql://localhost:5433/orders_db
+      username: postgres
+      password: SUP3RpostU$3R
+  sql:
+    init:
+      mode: always
 number-generate-service:
   base-url: http://localhost:8081
