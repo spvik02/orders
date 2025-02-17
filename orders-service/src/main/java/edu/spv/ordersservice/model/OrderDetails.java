@@ -1,5 +1,6 @@
 package edu.spv.ordersservice.model;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,6 +12,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderDetails {
+    @Schema(hidden = true)
     private Long id;
     @NotNull
     private Integer productCode;
